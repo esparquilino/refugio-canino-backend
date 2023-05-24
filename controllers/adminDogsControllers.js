@@ -50,14 +50,18 @@ exports.getHiddenDogs = catchAsync(async (req, res, next) => {
 
 exports.getAdoptedDogs = catchAsync(async (req, res, next) => {
   const adoptedDogs = await Dog.find()
+    .where("isAlive")
+    .equals(true)
     .where("adopted")
     .equals(true)
     .select("-__v");
 
   res.status(200).json({
     status: "success",
-    adoptedDogsCount: adoptedDogs.length,
-    adoptedDogs,
+    data: {
+      adoptedDogsCount: adoptedDogs.length,
+      adoptedDogs,
+    },
   });
 });
 
@@ -72,6 +76,49 @@ exports.getDeceasedDogs = catchAsync(async (req, res, next) => {
     data: {
       deceasedDogsCount: deceasedDogs.length,
       deceasedDogs,
+    },
+  });
+});
+
+exports.getDogStats = catchAsync(async (req, res, next) => {
+  const allDogsCount = await Dog.find().countDocuments();
+
+  const allFilteredDogsCount = await Dog.find()
+    .where("isAlive")
+    .equals(true)
+    .where("adopted")
+    .equals(false)
+    .where("isShown")
+    .equals(true)
+    .countDocuments();
+
+  const hiddenDogsCount = await Dog.find()
+    .where("isAlive")
+    .equals(true)
+    .where("isShown")
+    .equals(false)
+    .countDocuments();
+
+  const adoptedDogsCount = await Dog.find()
+    .where("isAlive")
+    .equals(true)
+    .where("adopted")
+    .equals(true)
+    .countDocuments();
+
+  const deceasedDogsCount = await Dog.find()
+    .where("isAlive")
+    .equals(false)
+    .countDocuments();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      allDogsCount,
+      allFilteredDogsCount,
+      hiddenDogsCount,
+      adoptedDogsCount,
+      deceasedDogsCount,
     },
   });
 });
