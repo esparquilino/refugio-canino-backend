@@ -1,8 +1,12 @@
 const express = require("express");
-const dogRouter = require("./routes/dogRoutes");
+
+const adminDogRouter = require("./routes/adminDogRoutes");
+const userDogsRouter = require("./routes/dogRoutes");
 const HttpError = require("./utils/httpError");
 const globalErrorhandler = require("./controllers/errorControllers");
+
 const app = express();
+app.use(express.json()); //req.body
 
 //MIDDLEWARE
 app.use((req, res, next) => {
@@ -16,10 +20,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json()); //req.body
-
 //ROUTES
-app.use("/api/v1/dogs", dogRouter);
+app.use("/api/admin/dogs", adminDogRouter);
+app.use("/api/user/dogs", userDogsRouter);
 
 app.all("*", (req, res, next) => {
   next(new HttpError(`Can't find ${req.originalUrl} on this server!`, 404));
