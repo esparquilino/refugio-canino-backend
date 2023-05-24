@@ -4,7 +4,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(dogsControllers.getAllDogs)
+  .get(dogsControllers.getFilteredDogs)
   .post(dogsControllers.createNewDog);
 
 router
