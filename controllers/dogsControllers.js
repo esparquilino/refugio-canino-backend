@@ -2,13 +2,13 @@ const Dog = require("../models/dogModel");
 const HttpError = require("../utils/httpError");
 const catchAsync = require("../utils/catchAsync");
 
-exports.getAllDogs = catchAsync(async (req, res, next) => {
+exports.getFilteredDogs = catchAsync(async (req, res, next) => {
   const page = +req.query.page || 1;
   const limit = req.query.limit || 12;
   const size = req.query.size || ["xs", "s", "m", "l", "xl"];
   const sort = req.query.sort || "dogName";
 
-  let allDogs = await Dog.find()
+  const allDogs = await Dog.find()
     .where("isAlive")
     .equals(true)
     .where("adopted")
@@ -22,7 +22,7 @@ exports.getAllDogs = catchAsync(async (req, res, next) => {
     .select("-__v -createdAt -createdBy -dataContact")
     .sort(sort);
 
-  let allDogsCount = await Dog.find()
+  const allDogsCount = await Dog.find()
     .where("isAlive")
     .equals(true)
     .where("adopted")
@@ -38,13 +38,13 @@ exports.getAllDogs = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
+      allDogs,
       pagination: {
         allDogsCount,
         totalPages,
         page,
         results: allDogs.length,
       },
-      allDogs,
     },
   });
 });
