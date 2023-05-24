@@ -15,7 +15,7 @@ exports.getAllDogs = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllFilteredDogs = catchAsync(async (req, res, next) => {
-  const filteredDogs = await Dog.find()
+  const allDogs = await Dog.find()
     .where("isAlive")
     .equals(true)
     .where("adopted")
@@ -27,14 +27,14 @@ exports.getAllFilteredDogs = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
-      filteredDogsCount: filteredDogs.length,
-      filteredDogs,
+      allDogsCount: allDogs.length,
+      allDogs,
     },
   });
 });
 
 exports.getHiddenDogs = catchAsync(async (req, res, next) => {
-  const hiddenDogs = await Dog.find()
+  const allDogs = await Dog.find()
     .where("isShown")
     .equals(false)
     .select("-__v");
@@ -42,14 +42,14 @@ exports.getHiddenDogs = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
-      hiddenDogsCount: hiddenDogs.length,
-      hiddenDogs,
+      allDogsCount: allDogs.length,
+      allDogs,
     },
   });
 });
 
 exports.getAdoptedDogs = catchAsync(async (req, res, next) => {
-  const adoptedDogs = await Dog.find()
+  const allDogs = await Dog.find()
     .where("isAlive")
     .equals(true)
     .where("adopted")
@@ -59,14 +59,14 @@ exports.getAdoptedDogs = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
-      adoptedDogsCount: adoptedDogs.length,
-      adoptedDogs,
+      allDogsCount: allDogs.length,
+      allDogs,
     },
   });
 });
 
 exports.getDeceasedDogs = catchAsync(async (req, res, next) => {
-  const deceasedDogs = await Dog.find()
+  const allDogs = await Dog.find()
     .where("isAlive")
     .equals(false)
     .select("-__v");
@@ -74,8 +74,8 @@ exports.getDeceasedDogs = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
-      deceasedDogsCount: deceasedDogs.length,
-      deceasedDogs,
+      allDogsCount: allDogs.length,
+      allDogs,
     },
   });
 });
