@@ -1,5 +1,5 @@
 const Dog = require("../models/dogModel");
-const HttpError = require("../utils/httpError");
+
 const catchAsync = require("../utils/catchAsync");
 
 exports.getAllDogs = catchAsync(async (req, res, next) => {

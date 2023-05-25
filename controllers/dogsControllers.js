@@ -83,9 +83,7 @@ exports.updateDog = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      dog,
-    },
+    data: dog,
   });
 });
 

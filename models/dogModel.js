@@ -7,7 +7,7 @@ const dogSchema = new mongoose.Schema(
       required: [true, "Cada perro debe tener un nombre"],
       unique: true,
       minlenght: [3, "Cada perro debe tener minimo 3 caracteres"],
-      minlenght: [3, "Cada perro debe tener maximo 40 caracteres"],
+      maxlenght: [50, "Cada perro debe tener maximo 50 caracteres"],
       trim: true,
       lowercase: true,
     },
