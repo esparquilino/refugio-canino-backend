@@ -80,9 +80,21 @@ const dogSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    images: {
+    images700: {
       type: [String],
-      required: [true, "Debe elegir al menos una foto"],
+      required: [true, "Debe elegir al menos una foto 700"],
+    },
+    images500: {
+      type: [String],
+      required: [true, "Debe elegir al menos una foto 500"],
+    },
+    images400: {
+      type: [String],
+      required: [true, "Debe elegir al menos una foto 400"],
+    },
+    images200: {
+      type: [String],
+      required: [true, "Debe elegir al menos una foto 200"],
     },
     isAlive: {
       type: Boolean,

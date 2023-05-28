@@ -3,7 +3,7 @@ const Dog = require("../models/dogModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getAllDogs = catchAsync(async (req, res, next) => {
-  const allDogs = await Dog.find();
+  const allDogs = await Dog.find().select("-__v").sort("dogName");
 
   res.status(200).json({
     status: "success",
@@ -37,7 +37,8 @@ exports.getHiddenDogs = catchAsync(async (req, res, next) => {
   const allDogs = await Dog.find()
     .where("isShown")
     .equals(false)
-    .select("-__v");
+    .select("-__v")
+    .sort("dogName");
 
   res.status(200).json({
     status: "success",
@@ -54,7 +55,8 @@ exports.getAdoptedDogs = catchAsync(async (req, res, next) => {
     .equals(true)
     .where("adopted")
     .equals(true)
-    .select("-__v");
+    .select("-__v")
+    .sort("dogName");
 
   res.status(200).json({
     status: "success",
@@ -69,7 +71,8 @@ exports.getDeceasedDogs = catchAsync(async (req, res, next) => {
   const allDogs = await Dog.find()
     .where("isAlive")
     .equals(false)
-    .select("-__v");
+    .select("-__v")
+    .sort("dogName");
 
   res.status(200).json({
     status: "success",
